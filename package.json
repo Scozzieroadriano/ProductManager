@@ -1,8 +1,8 @@
 {
-  "name": "productmanager",
+  "name": "ProductManagerServer",
   "version": "1.0.0",
   "description": "El Product Manager es una clase en JavaScript que te permite administrar productos utilizando un archivo JSON para almacenar los datos. Puedes realizar operaciones como agregar, actualizar, eliminar y obtener productos.",
-  "main": "server.js",
+  "main": "./src/app.js",
   "type": "module",
   "scripts": {
     "dev": "node --watch ."
