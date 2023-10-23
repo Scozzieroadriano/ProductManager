@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Televisor 1",
+    "description": "Televisor FULL HD 4K Samsung",
+    "price": 15,
+    "thumbnail": "ruta/imagen/monitorSamsung",
+    "code": "M01",
+    "stock": 5
+  },
+  {
+    "id": 2,
+    "title": "Monitor Samsung",
+    "description": "Monitor Gaming 4K Samsung",
+    "price": 22,
+    "thumbnail": "ruta/imagen/televisor1",
+    "code": "P11",
+    "stock": 8
+  }
+]
