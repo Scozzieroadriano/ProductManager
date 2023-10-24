@@ -1,51 +1,20 @@
 # Product Manager
 
-El Product Manager es una clase en JavaScript que te permite administrar productos utilizando un archivo JSON para almacenar los datos. Puedes realizar operaciones como agregar, actualizar, eliminar y obtener productos.
+El Product Manager es una clase en JavaScript que te permite administrar productos utilizando un archivo JSON para almacenar los datos. Esta conectado a un servidor con express, podes realizar peticiones get para obtener productos precargados en el archivo "products.json".
 
-## Uso
+## Instalación
 
-Para utilizar la clase `ProductManager`, primero debes importarla y crear una instancia de la misma:
+1- Para utilizar la clase `ProductManager`, primero debes importarla y crear una instancia de la misma en app.js:
+2- Debes descargar un cliente que te permita realizar peticiones get, por ejemplo Postman. Tambiìen podes acceder desde la consola web para este tipo de peticiones.
 
-### Agregar un producto
 
-Puedes agregar un nuevo producto utilizando el método addProduct. Debes proporcionar los siguientes campos: título, descripción, precio, ruta de imagen (thumbnail), código y stock.
-Valida que todos los campos se completen, genera un id autoincremental, y valida que no se repita el codigo de producto. Ejemplo:
+### Uso
+-Puedes obtener una lista de todos los productos o buscar un producto específico por su ID utilizando el método getProduct. Si no proporcionas un ID, obtendrás una lista de todos los productos. Si proporcionas un ID y el producto existe, obtendrás los detalles del producto.
+-Iniciar server con `npm run dev` o `npm start`.
 
-```javascript
-    productManager.addProduct(
-        'Televisor 1',
-        'Televisor FULL HD 4K Samsung',
-        15,
-        'ruta/imagen/televisor1',
-        'M01',
-        5
-    );
-```
+### Ejemplos
+Creando un new request en Postman en las siguiente rutas:
 
-### Actualizar un producto
-Puedes actualizar un producto existente utilizando el método updateProduct. Debes proporcionar el ID del producto que deseas actualizar y un objeto con los campos que deseas modificar.
-Valida que el producto exista y que los campos a actualizar existan dentro de dicho producto, (si se inventa una key, ejemplo [tamaño:10px] no hace efecto). Ejemplo:
+1- `http://localhost:8080/products` obtendremos lista completa de productos, esta misma ruta soporta query params el valor `?limit=` de esta manera, obtendremos una cantidad limitada de productos que dependen del valor que se reciba.
 
-```javascript
-const updatedFields = {
-    title: 'Nuevo Televisor',
-    price: 21
-};
-productManager.updateProduct(1, updatedFields);
-```
-
-### Eliminar productos
-Puedes eliminar uno o varios productos utilizando el método deleteProducts. Debes proporcionar un array de IDs de los productos que deseas eliminar. 
-
-```javascript
-const productDeleted = [1, 2];
-productManager.deleteProducts(productDeleted);
-```
-
-### Obtener productos
-Puedes obtener una lista de todos los productos o buscar un producto específico por su ID utilizando el método getProduct. Si no proporcionas un ID, obtendrás una lista de todos los productos. Si proporcionas un ID y el producto existe, obtendrás los detalles del producto.
-
-```javascript
-const products = productManager.getProduct(); // Obtener todos los productos
-const product = productManager.getProduct(1); // Obtener el producto con ID 1
-```
+2- `http://localhost:8080/products/:productId` esta ruta devuelve un unico producto cuyo id coincide con el valor de `productId`. Ejemplo de uso : `http://localhost:8080/products/2`

@@ -30,7 +30,7 @@ export class ProductManager {
         try {
             const products = await this.#readProducts(); //Reutilizo metodo
             
-            if (id) {
+            if (id && id > 0) {
                 const product = products.find((product) => product.id === id);
                 return product || `No existe un producto cuyo ID sea: ${id}`;
             } else {
