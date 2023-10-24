@@ -1,4 +1,4 @@
-[
+const products = [
   {
     "id": 1,
     "title": "Televisor 1",
@@ -43,5 +43,50 @@
     "thumbnail": "ruta/imagen/aurisaiyan",
     "code": "T05",
     "stock": 1
+  },
+  {
+    "id": 6,
+    "title": "Producto 6",
+    "description": "Descripción del Producto 6",
+    "price": 50,
+    "thumbnail": "ruta/imagen/producto6",
+    "code": "P06",
+    "stock": 10
+  },
+  {
+    "id": 7,
+    "title": "Producto 7",
+    "description": "Descripción del Producto 7",
+    "price": 30,
+    "thumbnail": "ruta/imagen/producto7",
+    "code": "P07",
+    "stock": 12
+  },
+  {
+    "id": 8,
+    "title": "Producto 8",
+    "description": "Descripción del Producto 8",
+    "price": 70,
+    "thumbnail": "ruta/imagen/producto8",
+    "code": "P08",
+    "stock": 6
+  },
+  {
+    "id": 9,
+    "title": "Producto 9",
+    "description": "Descripción del Producto 9",
+    "price": 25,
+    "thumbnail": "ruta/imagen/producto9",
+    "code": "P09",
+    "stock": 20
+  },
+  {
+    "id": 10,
+    "title": "Producto 10",
+    "description": "Descripción del Producto 10",
+    "price": 150,
+    "thumbnail": "ruta/imagen/producto10",
+    "code": "P10",
+    "stock": 3
   }
-]
+];
