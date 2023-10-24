@@ -29,6 +29,7 @@ export class ProductManager {
     async getProducts(id) { //Obtengo la lista de todos los productos, en caso de recibir un id, devuelve un producto si existe de esta manera unifico getProduct y getProductById
         try {
             const products = await this.#readProducts(); //Reutilizo metodo
+            
             if (id) {
                 const product = products.find((product) => product.id === id);
                 return product || `No existe un producto cuyo ID sea: ${id}`;
