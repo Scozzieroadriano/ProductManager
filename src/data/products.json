@@ -1,4 +1,4 @@
-const products = [
+[
   {
     "id": 1,
     "title": "Televisor 1",
@@ -89,4 +89,4 @@ const products = [
     "code": "P10",
     "stock": 3
   }
-];
+]
