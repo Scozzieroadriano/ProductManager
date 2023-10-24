@@ -1,8 +1,8 @@
-const fs = require('fs');
+import fs from 'fs';
 
-class ProductManager {
+export class ProductManager {
     constructor() {
-        this.path = './products.json'; //  Establezco la ruta donde se debe crear el archivo JS para el manejo de File System
+        this.path = './src/data/products.json';
     }
 
     async #readProducts() {  //Obtengo la informacion del JSON, de no existir devuelvo un array vacio - De esta manera puedo reutilizar esta parte de codigo en otros metodos
@@ -13,6 +13,7 @@ class ProductManager {
             }
             return []
         } catch (error) {
+            console.error('Error al leer el archivo JSON:')
             return [];
         }
     }
@@ -25,10 +26,9 @@ class ProductManager {
         return true
     }
 
-    async getProduct(id) { //Obtengo la lista de todos los productos, en caso de recibir un id, devuelve un producto si existe de esta manera unifico getProduct y getProductById
+    async getProducts(id) { //Obtengo la lista de todos los productos, en caso de recibir un id, devuelve un producto si existe de esta manera unifico getProduct y getProductById
         try {
             const products = await this.#readProducts(); //Reutilizo metodo
-
             if (id) {
                 const product = products.find((product) => product.id === id);
                 return product || `No existe un producto cuyo ID sea: ${id}`;
@@ -124,63 +124,3 @@ class ProductManager {
     }
 
 }
-
-async function testProductManager() {
-
-    const productManager = new ProductManager(); // Creo la instancia a la clase
-    
-    const products = await productManager.getProduct(); // Obtengo la lista de productos existentes 
-    console.log('------Devuelve [VACIO] POR PRIMERA VEZ------');
-    console.log(products);
-
-    console.log('------Creo Los productos------');
-    await productManager.addProduct(
-        'Televisor 1',
-        'Televisor FULL HD 4K Samsung',
-        15,
-        'ruta/imagen/monitorSamsung',
-        'M01',
-        5
-    );
-    await productManager.addProduct(
-        'Monitor Samsung',
-        'Monitor Gaming 4K Samsung',
-        22,
-        'ruta/imagen/televisor1',
-        'P11',
-        8
-    );
-    await productManager.addProduct(
-        'Celular Samsung',
-        'Celular Gaming Indestructible',
-        29,
-        'ruta/imagen/celular',
-        'C01',
-        2
-    );
-    console.log('------Vuelvo a traer la información pero actualizada------');
-    const updatedProducts = await productManager.getProduct(); // Obtengo la lista de productos actualizada
-    console.log(updatedProducts); // Muestro los productos actualizados
-
-    // Utilizo la misma funcion getProduct tanto para traer la información general como para filtrar por id de producto
-    console.log('------Busco los productos por ID------');
-    const productId = 1
-    const product = await productManager.getProduct(productId);
-    console.log(product);
-    
-    console.log('------Actualizo un producto existente en el JSON, necesito ID y los campos a actualizar------');
-    const updatedFields = {
-        title: 'Nuevo Televisor',
-        price: 21
-    };    
-    
-    await productManager.updateProduct(3, updatedFields);
-    
-    console.log('------Elimino los productos deseados utilizando el id de cada uno, pueden ser varios al mismo tiempo------');
-    
-    const productDeleted = [3,4]
-    await productManager.deleteProducts(productDeleted);
-    
-}
-testProductManager();
-

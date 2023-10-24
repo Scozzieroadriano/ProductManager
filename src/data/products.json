@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "title": "Televisor 1",
+    "description": "Televisor FULL HD 4K Samsung",
+    "price": 15,
+    "thumbnail": "ruta/imagen/monitorSamsung",
+    "code": "M01",
+    "stock": 5
+  },
+  {
+    "id": 2,
+    "title": "Monitor Samsung",
+    "description": "Monitor Gaming 4K Samsung",
+    "price": 22,
+    "thumbnail": "ruta/imagen/monitorSamsung",
+    "code": "P11",
+    "stock": 8
+  },
+  {
+    "id": 3,
+    "title": "Teclado Gamer 4",
+    "description": "Teclado Gamer 4 StorageCompact",
+    "price": 5,
+    "thumbnail": "ruta/imagen/teclado4",
+    "code": "T01",
+    "stock": 15
+  },
+  {
+    "id": 4,
+    "title": "Mouse Optico - Oficina Stantard",
+    "description": "Mouse Optico - Oficina Preparado para Terremotos",
+    "price": 75,
+    "thumbnail": "ruta/imagen/mouseoptico",
+    "code": "M02",
+    "stock": 15
+  },
+  {
+    "id": 5,
+    "title": "Auricular Z",
+    "description": "Testeado por Gokú",
+    "price": 1000,
+    "thumbnail": "ruta/imagen/aurisaiyan",
+    "code": "T05",
+    "stock": 1
+  }
+]
