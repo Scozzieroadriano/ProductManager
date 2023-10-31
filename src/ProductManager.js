@@ -20,6 +20,7 @@ export class ProductManager {
     //Método para validar campos obligatorios
     #fieldsValidation(title, description, price, thumbnail, code, stock) {
         if (!title || !description || !price || !thumbnail || !code || !stock) {
+            console.log(title + ', ' + description + ', ' + price + ', ' + thumbnail + ', ' + code + ', ' + stock);
             console.log("Los campos son requeridos")
             return false;
         }
@@ -29,10 +30,10 @@ export class ProductManager {
     async getProducts(id) { //Obtengo la lista de todos los productos, en caso de recibir un id, devuelve un producto si existe de esta manera unifico getProduct y getProductById
         try {
             const products = await this.#readProducts(); //Reutilizo metodo
-            
+
             if (id && id > 0) {
                 const product = products.find((product) => product.id === id);
-                return product || `No existe un producto cuyo ID sea: ${id}`;
+                return product || null;
             } else {
                 return products;
             }
@@ -41,11 +42,10 @@ export class ProductManager {
         }
     }
 
-    async addProduct(title, description, price, thumbnail, code, stock) { //Obtengo la información del JSON y actualizo el array, luego actualizo el JSON
+    async addProduct({ title, description, price, thumbnail, code, stock }) { //Obtengo la información del JSON y actualizo el array, luego actualizo el JSON
 
         try {
             const products = await this.#readProducts(); //Reutilizo metodo
-
             const maxId = Math.max(...products.map(product => product.id), 0); //Busco el id máximo que se encuentre en el array de los productos existentes
 
             if (!this.#fieldsValidation(title, description, price, thumbnail, code, stock)) {
@@ -69,44 +69,44 @@ export class ProductManager {
                 products.push(newProduct);
                 await fs.promises.writeFile(this.path, JSON.stringify(products, null, 2), 'utf-8');
                 console.log(`Producto '${title}' Agregado, ID: ${newProduct.id}`);
+                return newProduct;
             }
         } catch (error) {
             console.error('Error al agregar producto:', error);
         }
     }
 
-    async updateProduct(id, fieldsToUpdate) { // Obtengo la info del JSON y busco el producto que se quiere actualizar mediante su ID
+    async updateProduct(id, fieldsToUpdate) {
         try {
             const products = await this.#readProducts();
-            const productToUpdate = products.find(product => product.id === id)
-            let originalId = null;
+            const productIndex = products.findIndex(product => product.id === id);
 
-            if (!productToUpdate) {
+            if (productIndex === -1) {
                 console.log(`No se encontró un producto con ID ${id}`);
-            } else{
+                return null;
+            }
 
-                originalId = productToUpdate.id
-                if (fieldsToUpdate) {
-                    Object.keys(fieldsToUpdate).forEach(key => { //Por cada key que no sea 'ID' y que exista en el objeto a modificar, voy actualizando los valores
-                        if (key !== 'id' && key in productToUpdate) {
-                            productToUpdate[key] = fieldsToUpdate[key]
-                        }
-                    })
+            const productToUpdate = products[productIndex];
 
-                    await fs.promises.writeFile(this.path, JSON.stringify(products, null, 2), 'utf-8');
-                    console.log(`El producto con id ${originalId} se actualizó correctamente`);
-
+            if (fieldsToUpdate) {
+                for (const key in fieldsToUpdate) {
+                    if (key !== 'id' && key in productToUpdate) {
+                        productToUpdate[key] = fieldsToUpdate[key];
+                    }
                 }
-                else { console.log('Establezca los campos que desea cambiar'); }
 
-            productToUpdate.id = originalId;
-            return productToUpdate;
-        }
+                await fs.promises.writeFile(this.path, JSON.stringify(products, null, 2), 'utf-8');
+                console.log(`El producto con ID ${id} se actualizó correctamente`);
+            } else {
+                console.log('Establezca los campos que desea cambiar');
+                return null;
+            }
         } catch (error) {
-            console.log(error);
+            console.log('Error al actualizar el producto:', error);
+            return null;
         }
-
     }
+
 
     async deleteProducts(ids) { // Obtengo los productos del JSON, utilizo un filter y como callback un includes para descargar los productos cuyo ID esten en el array "ids" que se recibe como parametro
         try {
@@ -115,7 +115,7 @@ export class ProductManager {
 
             if (newProducts.length < products.length) { //Si los tamaños entre el original y el nuevo array son distintos entonces guardo la nueva informacion en el JSON
                 await fs.promises.writeFile(this.path, JSON.stringify(newProducts, null, 2), 'utf-8');
-                console.log(`Productos con IDs [${ids.join(', ')}] eliminados correctamente.`);
+                return newProducts
             } else {
                 console.log('Productos no encontrados');
             }

@@ -1,12 +1,12 @@
 [
   {
     "id": 1,
-    "title": "Televisor 1",
-    "description": "Televisor FULL HD 4K Samsung",
-    "price": 15,
-    "thumbnail": "ruta/imagen/monitorSamsung",
-    "code": "M01",
-    "stock": 5
+    "title": "Balón de Oro",
+    "description": "Testeado por Messi",
+    "price": 1000,
+    "thumbnail": "balond'or",
+    "code": "El mas grande",
+    "stock": 8
   },
   {
     "id": 2,
@@ -79,14 +79,5 @@
     "thumbnail": "ruta/imagen/producto9",
     "code": "P09",
     "stock": 20
-  },
-  {
-    "id": 10,
-    "title": "Producto 10",
-    "description": "Descripción del Producto 10",
-    "price": 150,
-    "thumbnail": "ruta/imagen/producto10",
-    "code": "P10",
-    "stock": 3
   }
 ]

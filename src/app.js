@@ -3,6 +3,7 @@ import { ProductManager } from './ProductManager.js';
 
 const app = express();
 
+app.use(express.json());
 const productManager = new ProductManager() //Instancio la clase para acceder a sus métodos
 
 app.get('/products', async (req, res) => {
@@ -27,7 +28,7 @@ app.get('/products', async (req, res) => {
 app.get('/products/:productId', async (req, res) => {
     try {
         const { productId } = req.params;
-        const product = await productManager.getProducts(parseInt(productId));
+        const product = await productManager.getProducts(Number(productId));
 
         if (product) {
             res.status(200).json(product);
@@ -39,6 +40,47 @@ app.get('/products/:productId', async (req, res) => {
         res.status(500).json({ error: 'Error interno del servidor' });
     }
 });
+
+app.post('/products', async (req, res) => {
+    try {
+        const product = req.body;
+        const productCreated = await productManager.addProduct(product);
+        res.status(200).json(productCreated);
+    } catch (error) {
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+})
+
+app.put('/products/:id', async (req, res) => {
+    try {
+        const product = { ...req.body };
+        const { id } = req.params
+        const idNumber = Number(id)
+        const productOk = await productManager.getProducts(idNumber);
+        if (!productOk) {
+            res.status(404).json({ error: 'Producto no encontrado' })
+        }
+        else {
+            await productManager.updateProduct(idNumber, product);
+            res.status(200).json({ message: `El usuario con id: ${idNumber} fué actualizado` })
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Error internos del servidor' });
+    }
+})
+app.delete('/products/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const idNumber = Number(id);
+        const productDeleted = await productManager.deleteProducts([idNumber])
+        if (!productDeleted) { return res.status(404).json({ error: 'Producto no encontrado' }) }
+        else {
+            res.json({ message: `User id: ${idNumber} deleted.` })
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Error internos del servidor' });
+    }
+})
 
 const PORT = 8080;
 app.listen(PORT, () => console.log(`Server Ok on Port ${PORT}`));
