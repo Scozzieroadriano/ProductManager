@@ -1,8 +1,8 @@
 import fs from 'fs';
 
 export class ProductManager {
-    constructor() {
-        this.path = './src/data/products.json';
+    constructor(path) {
+        this.path = path;
     }
 
     async #readProducts() {  //Obtengo la informacion del JSON, de no existir devuelvo un array vacio - De esta manera puedo reutilizar esta parte de codigo en otros metodos
