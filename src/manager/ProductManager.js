@@ -17,15 +17,6 @@ export class ProductManager {
             return [];
         }
     }
-    //Método para validar campos obligatorios
-    #fieldsValidation(title, description, price, thumbnail, code, stock) {
-        if (!title || !description || !price || !thumbnail || !code || !stock) {
-            console.log(title + ', ' + description + ', ' + price + ', ' + thumbnail + ', ' + code + ', ' + stock);
-            console.log("Los campos son requeridos")
-            return false;
-        }
-        return true
-    }
 
     async getProducts(id) { //Obtengo la lista de todos los productos, en caso de recibir un id, devuelve un producto si existe de esta manera unifico getProduct y getProductById
         try {
@@ -48,12 +39,8 @@ export class ProductManager {
             const products = await this.#readProducts(); //Reutilizo metodo
             const maxId = Math.max(...products.map(product => product.id), 0); //Busco el id máximo que se encuentre en el array de los productos existentes
 
-            if (!this.#fieldsValidation(title, description, price, thumbnail, code, stock)) {
-                return; // Si la validación de campos falla, no se agrega el producto.
-            }
-
             if (products.some(product => product.code === code)) {
-                console.log(`Ya existe un producto con el código: ${code}`); //Verifico que el codigo del producto no se repita en el JSON
+                return {message: `Ya existe un producto con el código: ${code}`}
             } else {
 
                 const newProduct = {

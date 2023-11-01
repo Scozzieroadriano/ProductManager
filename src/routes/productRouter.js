@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ProductManager } from '../manager/ProductManager.js';
-
+import { validationProduct } from "../middelwares/validationMid.js";
 const router = Router();
 
 const productManager = new ProductManager('./src/data/products.json') //Instancio la clase para acceder a sus métodos
@@ -40,7 +40,7 @@ router.get('/:productId', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', validationProduct, async (req, res) => {
     try {
         const product = req.body;
         const productCreated = await productManager.addProduct(product);
@@ -61,7 +61,7 @@ router.put('/:id', async (req, res) => {
         }
         else {
             await productManager.updateProduct(idNumber, product);
-            res.status(200).json({ message: `El usuario con id: ${idNumber} fué actualizado` })
+            res.status(200).json({ message: `El producto con id: ${idNumber} fué actualizado` })
         }
     } catch (error) {
         res.status(500).json({ error: 'Error internos del servidor' });
@@ -74,7 +74,7 @@ router.delete('/:id', async (req, res) => {
         const productDeleted = await productManager.deleteProducts([idNumber])
         if (!productDeleted) { return res.status(404).json({ error: 'Producto no encontrado' }) }
         else {
-            res.json({ message: `User id: ${idNumber} deleted.` })
+            res.json({ message: `El producto con  id: ${idNumber} fué eliminado.` })
         }
     } catch (error) {
         res.status(500).json({ error: 'Error internos del servidor' });

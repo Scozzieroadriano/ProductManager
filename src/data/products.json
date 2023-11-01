@@ -79,5 +79,14 @@
     "thumbnail": "ruta/imagen/producto9",
     "code": "P09",
     "stock": 20
+  },
+  {
+    "id": 10,
+    "title": "Plato de comida",
+    "description": "Testeado por mi",
+    "price": 111111,
+    "thumbnail": "arroz con atun",
+    "code": "AR-TUN",
+    "stock": 1
   }
 ]
