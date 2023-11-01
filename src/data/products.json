@@ -1,112 +1,112 @@
 [
-    {
-        "id": 1,
-        "title": "Producto A",
-        "description": "Este es un producto de alta calidad",
-        "code": "P-1001",
-        "price": 49.99,
-        "status": true,
-        "stock": 50,
-        "category": "Electrónica",
-        "thumbnails": "https://example.com/productA.jpg"
-    },
-    {
-        "id": 2,
-        "title": "Producto B",
-        "description": "Un producto imprescindible para tu hogar",
-        "code": "P-2002",
-        "price": 29.95,
-        "status": true,
-        "stock": 25,
-        "category": "Hogar",
-        "thumbnails": "https://example.com/productB.jpg"
-    },
-    {
-        "id": 3,
-        "title": "Producto C",
-        "description": "Perfecto para actividades al aire libre",
-        "code": "P-3003",
-        "price": 79.99,
-        "status": true,
-        "stock": 20,
-        "category": "Deportes",
-        "thumbnails": "https://example.com/productC.jpg"
-    },
-    {
-        "id": 4,
-        "title": "Producto D",
-        "description": "El último modelo de teléfono inteligente",
-        "code": "P-4004",
-        "price": 699.99,
-        "status": true,
-        "stock": 10,
-        "category": "Tecnología",
-        "thumbnails": "https://example.com/productD.jpg"
-    },
-    {
-        "id": 5,
-        "title": "Producto E",
-        "description": "Diseño elegante y moderno",
-        "code": "P-5005",
-        "price": 149.99,
-        "status": true,
-        "stock": 15,
-        "category": "Moda",
-        "thumbnails": "https://example.com/productE.jpg"
-    },
-    {
-        "id": 6,
-        "title": "Producto F",
-        "description": "Ideal para actividades al aire libre",
-        "code": "P-6006",
-        "price": 39.99,
-        "status": true,
-        "stock": 30,
-        "category": "Deportes",
-        "thumbnails": "https://example.com/productF.jpg"
-    },
-    {
-        "id": 7,
-        "title": "Producto G",
-        "description": "Disfruta de tus películas favoritas",
-        "code": "P-7007",
-        "price": 199.99,
-        "status": true,
-        "stock": 12,
-        "category": "Entretenimiento",
-        "thumbnails": "https://example.com/productG.jpg"
-    },
-    {
-        "id": 8,
-        "title": "Producto H",
-        "description": "Para aficionados al bricolaje",
-        "code": "P-8008",
-        "price": 59.99,
-        "status": true,
-        "stock": 40,
-        "category": "Hogar",
-        "thumbnails": "https://example.com/productH.jpg"
-    },
-    {
-        "id": 9,
-        "title": "Producto I",
-        "description": "Un regalo perfecto para cualquier ocasión",
-        "code": "P-9009",
-        "price": 34.99,
-        "status": true,
-        "stock": 18,
-        "category": "Regalos",
-        "thumbnails": "https://example.com/productI.jpg"
-    },
-    {
-        "id": 10,
-        "title": "Producto J",
-        "description": "Increíble rendimiento y durabilidad",
-        "code": "P-1010",
-        "price": 129.99,
-        "status": true,
-        "stock": 22,
-        "category": "Electrónica",
-        "thumbnails": "https://example.com/productJ.jpg"
-    }
+  {
+    "id": 1,
+    "title": "Título cambiado",
+    "description": "Este es un producto de alta calidad",
+    "code": "P-1001",
+    "price": 49.99,
+    "status": true,
+    "stock": 50,
+    "category": "Electrónica",
+    "thumbnails": "https://example.com/productA.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Producto B",
+    "description": "Un producto imprescindible para tu hogar",
+    "code": "P-2002",
+    "price": 29.95,
+    "status": true,
+    "stock": 25,
+    "category": "Hogar",
+    "thumbnails": "https://example.com/productB.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Producto C",
+    "description": "Perfecto para actividades al aire libre",
+    "code": "P-3003",
+    "price": 79.99,
+    "status": true,
+    "stock": 20,
+    "category": "Deportes",
+    "thumbnails": "https://example.com/productC.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Producto D",
+    "description": "El último modelo de teléfono inteligente",
+    "code": "P-4004",
+    "price": 699.99,
+    "status": true,
+    "stock": 10,
+    "category": "Tecnología",
+    "thumbnails": "https://example.com/productD.jpg"
+  },
+  {
+    "id": 5,
+    "title": "Producto E",
+    "description": "Diseño elegante y moderno",
+    "code": "P-5005",
+    "price": 149.99,
+    "status": true,
+    "stock": 15,
+    "category": "Moda",
+    "thumbnails": "https://example.com/productE.jpg"
+  },
+  {
+    "id": 6,
+    "title": "Producto F",
+    "description": "Ideal para actividades al aire libre",
+    "code": "P-6006",
+    "price": 39.99,
+    "status": true,
+    "stock": 30,
+    "category": "Deportes",
+    "thumbnails": "https://example.com/productF.jpg"
+  },
+  {
+    "id": 7,
+    "title": "Producto G",
+    "description": "Disfruta de tus películas favoritas",
+    "code": "P-7007",
+    "price": 199.99,
+    "status": true,
+    "stock": 12,
+    "category": "Entretenimiento",
+    "thumbnails": "https://example.com/productG.jpg"
+  },
+  {
+    "id": 8,
+    "title": "Producto H",
+    "description": "Para aficionados al bricolaje",
+    "code": "P-8008",
+    "price": 59.99,
+    "status": true,
+    "stock": 40,
+    "category": "Hogar",
+    "thumbnails": "https://example.com/productH.jpg"
+  },
+  {
+    "id": 9,
+    "title": "Producto I",
+    "description": "Un regalo perfecto para cualquier ocasión",
+    "code": "P-9009",
+    "price": 34.99,
+    "status": true,
+    "stock": 18,
+    "category": "Regalos",
+    "thumbnails": "https://example.com/productI.jpg"
+  },
+  {
+    "id": 10,
+    "title": "Producto J",
+    "description": "Increíble rendimiento y durabilidad",
+    "code": "P-1010",
+    "price": 129.99,
+    "status": true,
+    "stock": 22,
+    "category": "Electrónica",
+    "thumbnails": "https://example.com/productJ.jpg"
+  }
 ]

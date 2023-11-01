@@ -14,7 +14,7 @@ export class CartManager {
                 return []
             }
         } catch (error) {
-            return { 'error': error.message };
+            return [];
         }
     }
     async #getMaxId() {
@@ -37,7 +37,7 @@ export class CartManager {
             await fs.promises.writeFile(this.path, JSON.stringify(cartsFile))
             return cart
         } catch (error) {
-            return { 'error': error.message };
+            return { 'errore': error.message };
         }
     }
     async getCartById(id) {
@@ -51,20 +51,33 @@ export class CartManager {
         }
     }
     async saveProduct(idCart, idProduct) {
-        const carts = await this.#readCarts();
-        const cartOk = await this.getCartById(idCart)
-        if (!cartOk) {
-            const producOk = cartOk.products.find(p => p.id === idProduct)
-            if (producOk) producOk.quantity + 1
-            else {
-                const newProduct = {
-                    product: idProduct,
-                    quantity: 1
+        try {
+            const carts = await this.#readCarts();
+            const cartOk = await this.getCartById(idCart);
+            if (cartOk) {
+                const producOk = cartOk.products.find(p => p.productId === idProduct);
+                if (producOk) producOk.quantity += 1;
+                else {
+                    const newProduct = {
+                        productId: idProduct,
+                        quantity: 1
+                    };
+                    cartOk.products.push(newProduct);
                 }
-                cartOk.products.push(newProduct)
+                const cartIndex = carts.findIndex(c => c.id === idCart);
+                if (cartIndex !== -1) {
+                    carts[cartIndex] = cartOk;
+                }
+                await fs.promises.writeFile(this.path, JSON.stringify(carts, null, 2), 'utf-8');
+
+                return cartOk;
+            } else{
+                return { 'message': 'Cart not found'}
             }
-            await fs.promises.writeFile(this.path, JSON.stringify(carts))
-            return cartOk;
+        } catch (error) {
+            console.error('Error al guardar el carrito:', error);
+            return { 'error': error.message };
         }
     }
+
 }

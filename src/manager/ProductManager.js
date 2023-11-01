@@ -13,7 +13,6 @@ export class ProductManager {
             }
             return []
         } catch (error) {
-            console.error('Error al leer el archivo JSON:')
             return [];
         }
     }
