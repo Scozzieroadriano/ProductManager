@@ -19,7 +19,7 @@ router.get('/:cId', async (req, res) => {
     try {
         const { cId } = req.params;
 
-        const cart = await cartManager.getCartById(Number(cId));
+        const cart = await cartManager.getCarts(Number(cId));
 
         if (cart) {
             res.status(200).json(cart);
@@ -32,6 +32,23 @@ router.get('/:cId', async (req, res) => {
     }
 
 })
+
+router.get('/', async (req, res) => {
+    try {
+        // Obtenemos los productos
+        const products = await cartManager.getCarts();
+
+        if (products) {
+            res.status(200).json(products);
+        } else {
+            res.status(404).json('No hay carritos');
+        }
+    } catch (error) {
+        console.error('Error al obtener productos:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
 
 router.post('/:cId/products/:idProd', async (req, res) => {
     try {

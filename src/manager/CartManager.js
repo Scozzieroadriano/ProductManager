@@ -5,7 +5,7 @@ export class CartManager {
         this.path = path;
     }
 
-    async #readCarts() {  //Obtengo la informacion del JSON, de no existir devuelvo un array vacio - De esta manera puedo reutilizar esta parte de codigo en otros metodos
+    async #readCarts() {
         try {
             if (fs.existsSync(this.path)) {
                 const data = await fs.promises.readFile(this.path, 'utf-8');
@@ -13,7 +13,8 @@ export class CartManager {
             } else {
                 return []
             }
-        } catch (error) {
+        } catch (e) {
+            console.error('Error en #readCarts:', e);
             return [];
         }
     }
@@ -37,17 +38,22 @@ export class CartManager {
             await fs.promises.writeFile(this.path, JSON.stringify(cartsFile))
             return cart
         } catch (error) {
-            return { 'errore': error.message };
+            console.error('Error en #readCarts:', error);
         }
     }
-    async getCartById(id) {
+
+    async getCarts(id) {
         try {
-            const carts = await this.#readCarts();
-            const cart = carts.find(c => c.id === id)
-            if (!cart) return false;
-            return cart
+            const carts = await this.#readCarts(); //Reutilizo metodo
+
+            if (id && id > 0) {
+                const cart = carts.find((c) => c.id === id);
+                return cart || null;
+            } else {
+                return carts;
+            }
         } catch (error) {
-            return { 'error': error.message };
+            console.error('Error al obtener los carritos:', error);
         }
     }
     async saveProduct(idCart, idProduct) {
@@ -71,8 +77,8 @@ export class CartManager {
                 await fs.promises.writeFile(this.path, JSON.stringify(carts, null, 2), 'utf-8');
 
                 return cartOk;
-            } else{
-                return { 'message': 'Cart not found'}
+            } else {
+                return { 'message': 'Cart not found' }
             }
         } catch (error) {
             console.error('Error al guardar el carrito:', error);
