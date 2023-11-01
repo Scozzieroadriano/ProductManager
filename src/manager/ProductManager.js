@@ -33,7 +33,7 @@ export class ProductManager {
         }
     }
 
-    async addProduct({ title, description, price, thumbnail, code, stock }) { //Obtengo la información del JSON y actualizo el array, luego actualizo el JSON
+    async addProduct({ title, description, code, price, status, stock, category, thumbnails }) { //Obtengo la información del JSON y actualizo el array, luego actualizo el JSON
 
         try {
             const products = await this.#readProducts(); //Reutilizo metodo
@@ -46,11 +46,13 @@ export class ProductManager {
                 const newProduct = {
                     id: maxId + 1,
                     title,
-                    description,
-                    price,
-                    thumbnail,
-                    code,
-                    stock,
+                    description, 
+                    code, 
+                    price, 
+                    status, 
+                    stock, 
+                    category, 
+                    thumbnails
                 };
 
                 products.push(newProduct);
