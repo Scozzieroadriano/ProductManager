@@ -33,25 +33,25 @@ export class ProductManager {
         }
     }
 
-    async addProduct({ title, description, code, price, status, stock, category, thumbnails }) { //Obtengo la información del JSON y actualizo el array, luego actualizo el JSON
+    async addProduct({ title, description, code, price, stock, category, thumbnails }) { //Obtengo la información del JSON y actualizo el array, luego actualizo el JSON
 
         try {
             const products = await this.#readProducts(); //Reutilizo metodo
             const maxId = Math.max(...products.map(product => product.id), 0); //Busco el id máximo que se encuentre en el array de los productos existentes
 
             if (products.some(product => product.code === code)) {
-                return {message: `Ya existe un producto con el código: ${code}`}
+                return { message: `Ya existe un producto con el código: ${code}` }
             } else {
 
                 const newProduct = {
                     id: maxId + 1,
                     title,
-                    description, 
-                    code, 
-                    price, 
-                    status, 
-                    stock, 
-                    category, 
+                    description,
+                    code,
+                    price,
+                    status: true,
+                    stock,
+                    category,
                     thumbnails
                 };
 
