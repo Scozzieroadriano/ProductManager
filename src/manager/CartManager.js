@@ -59,7 +59,7 @@ export class CartManager {
     async saveProduct(idCart, idProduct) {
         try {
             const carts = await this.#readCarts();
-            const cartOk = await this.getCartById(idCart);
+            const cartOk = await this.getCarts(idCart);
             if (cartOk) {
                 const producOk = cartOk.products.find(p => p.productId === idProduct);
                 if (producOk) producOk.quantity += 1;
