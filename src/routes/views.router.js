@@ -30,7 +30,9 @@ router.get('/home', async (req, res) => {
     }      
 });
 
-router.get('/vista2', (req, res) => {
-    res.render('vista2')
+
+
+router.get('/realtimeproducts', (req, res) => {
+    res.render('realtimeproducts')
 });
 export default router; 
