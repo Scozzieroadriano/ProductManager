@@ -53,6 +53,10 @@ Para iniciar el servidor Express y comenzar a utilizar estas rutas y operaciones
 
 `npm run dev`
 
-#### Adiciono manejo de errores
-Deje unos consolo.log en la parte de la creación del carrito porque no pude encontrale la vuelta a lo siguiente:
-si el archivo no existe anda todo perfecto, pero si el archivo existe y supongamos que borro todo su contenido incluyendo [], me tira un doble error, del mismo metodo.. No se si se puede manejar ese tipo de errores y tampoco porque me lo muestra dos veces.
+# INSTALACION DE HANDLERBARS Y WEBSOCKETS
+
+-Se implementan las librerias express-handlebars y socket.io para interactuar con el front en tiempo real.
+-Se Crea un endpoint /home en el cual se obtienen los productos en su totalidad
+-Se Crea un endpoint /realtimeproducts en el cual obtenemos los productos en su totalidad y podemos agregar desde un formulario más productos, tambien podemos borrar por id y el dom se actualiza en tiempo real
+
+## LA APP AVISA POR CONSOLA DEL SERVIDOR SI UN CLIENTE SE CONECTA O DESCONECTA
