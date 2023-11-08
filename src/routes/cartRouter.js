@@ -66,4 +66,5 @@ router.post('/:cId/products/:idProd', async (req, res) => {
         res.status(501).json({ error: 'Error interno del servidor' });
     }
 })
+
 export default router;

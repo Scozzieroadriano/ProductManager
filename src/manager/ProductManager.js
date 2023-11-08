@@ -39,7 +39,8 @@ export class ProductManager {
             const maxId = Math.max(...products.map(product => product.id), 0); //Busco el id máximo que se encuentre en el array de los productos existentes
 
             if (products.some(product => product.code === code)) {
-                return { message: `Ya existe un producto con el código: ${code}` }
+                const alert = { message: `Ya existe un producto con el código: ${code}` }
+                return alert
             } else {
 
                 const newProduct = {

@@ -22,15 +22,13 @@ router.get('/home', async (req, res) => {
     } catch (error) {
         console.error('Error al obtener productos:', error);
         const data = {
-            limit, // Agregamos el valor de limit al objeto de datos
+            limit,
             limitProducts: [],
             errorMessage: 'Error interno del servidor',
         };
         res.render('home', data);
     }      
 });
-
-
 
 router.get('/realtimeproducts', (req, res) => {
     res.render('realtimeproducts')
