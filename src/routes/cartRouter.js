@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { CartManager } from "../manager/CartManager.js";
-import { ProductManager } from '../manager/ProductManager.js';
+import { CartManager } from "../daos/filesystem/cart.dao.js";
+import { ProductManager } from '../daos/filesystem/product.dao.js.js';
 
 const router = Router();
 const cartManager = new CartManager('./src/data/carts.json') //Instancio la clase para acceder a sus métodos

@@ -1,6 +1,25 @@
 import { Router } from "express";
-import { ProductManager } from '../manager/ProductManager.js';
+import * as controller from "../controllers/product.controllers.js";
+
+const router = Router();
+
+router.get("/", controller.getAllProducts);
+
+router.get("/:id", controller.getById);
+
+router.post("/", controller.create);
+
+router.put("/:id", controller.update);
+
+router.delete("/:id", controller.remove);
+
+export default router;
+
+
+/*import { Router } from "express";
+import { ProductManager } from '../daos/filesystem/product.dao.js.js';
 import { validationProduct } from "../middelwares/validationMid.js";
+import * as controller from "../controllers/product.controllers.js"
 const router = Router();
 
 const productManager = new ProductManager('./src/data/products.json') //Instancio la clase para acceder a sus métodos
@@ -82,3 +101,4 @@ router.delete('/:id', async (req, res) => {
 })
 
 export default router;
+*/

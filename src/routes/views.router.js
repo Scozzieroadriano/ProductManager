@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ProductManager } from '../manager/ProductManager.js';
+import { ProductManager } from '../daos/filesystem/product.dao.js.js';
 
 const productManager = new ProductManager('./src/data/products.json') //Instancio la clase para acceder a sus métodos
 
