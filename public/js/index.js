@@ -28,7 +28,7 @@ form.onsubmit = (e) => {
 }
 formelminar.onsubmit = (e) => {
     e.preventDefault();
-    const idProduct = parseInt(inputIdproduct.value)
+    const idProduct = (inputIdproduct.value)
     const product = [idProduct]
     //creo el objeto con los datos del input
     socketClient.emit('deleteProduct', product);
