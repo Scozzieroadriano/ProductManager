@@ -4,6 +4,8 @@ import * as cartController from "../controllers/cart.controller.js";
 const router = Router();
 
 router.post("/", cartController.create);
+router.get("/:id", cartController.getCartById);
+router.post('/:cId/products/:idProd', cartController.update);
 export default router;
 //Instancio la clase para acceder a sus métodos
 //const productManager = new ProductDaoFileSystem('.../daos/filesystem/data/products.json')

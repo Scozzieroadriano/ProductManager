@@ -11,3 +11,22 @@ export const create = async () => {
         console.log(error);
     }
 };
+
+export const getCartById = async (id) => {
+    try {
+        const cart = await cartDao.getCartById(id);
+        if (!cart) return false;
+        else return cart;
+    } catch (error) {
+        console.log(error);
+    }
+};
+export const saveProduct = async (idCart, idProduct) => {
+    try {
+        const cartUpd = await cartDao.saveProduct(idCart, idProduct);
+        if (!cartUpd) return false;
+        else return cartUpd;
+    } catch (error) {
+        console.log(error);
+    }
+};
