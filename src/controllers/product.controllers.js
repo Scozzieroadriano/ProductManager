@@ -10,8 +10,9 @@ export const getAll = async (req, res, next) => {
         } else {
             res.status(200).json(response);
         }
+        
     } catch (error) {
-        next(error.message);
+        console.log(error.message);
     }
 };
 

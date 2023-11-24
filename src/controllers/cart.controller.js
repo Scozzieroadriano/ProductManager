@@ -9,6 +9,21 @@ export const create = async (req, res, next) => {
         next(error.message);
     }    
 };
+export const getAll = async (req, res, next) => {
+    try {
+        const response = await cartServices.getAll();
+        const limit = parseInt(req.query.limit) || 0;
+        if (limit > 0) {
+            const limitProducts = response.slice(0, limit);
+            res.status(200).json(limitProducts);
+        } else {
+            res.status(200).json(response);
+        }
+    } catch (error) {
+        next(error.message);
+    }
+};
+
 export const getCartById = async (req, res, next) => {
     try {
         const { id } = req.params;

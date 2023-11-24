@@ -12,6 +12,14 @@ export const create = async () => {
     }
 };
 
+export const getAll = async () => {
+    try {
+        return await cartDao.getAll();        
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export const getCartById = async (id) => {
     try {
         const cart = await cartDao.getCartById(id);

@@ -1,5 +1,4 @@
 import { CartModel } from "./models/cart.model.js";
-import { ProductModel } from "./models/product.model.js";
 export default class CartDaoMongoDB {
     async createCart() {
         try {
@@ -9,6 +8,14 @@ export default class CartDaoMongoDB {
             throw error;
         }
     }
+    async getAll() {
+        try {    
+          const response = await CartModel.find({});
+          return response;
+        } catch (error) {
+          console.log(error);
+        }
+      }
 
     async getCartById(id) {
         try {
@@ -22,33 +29,27 @@ export default class CartDaoMongoDB {
       async saveProduct(idCart, idProduct) {
         try {
             const cartOk = await CartModel.findById(idCart);
-    
+            
             if (cartOk) {
-                const productOk = cartOk.products.find(p => p.productId === idProduct);
-                console.log(productOk);
-                if (productOk) {
-                    // Si el producto ya existe, incrementa la cantidad
-                    const newProduct = { productId: idProduct, quantity: productOk.quantity += 1}
-                    cartOk.products.push(newProduct);
-                    await cartOk.save();
+                const productoExistente = cartOk.products.find(producto => producto.productId === idProduct);
+
+                if (productoExistente) {
+                    //Si tengo un producto en el carrito incremento la cantidad en 1
+                    productoExistente.quantity += 1
                 } else {
-                    // Si el producto no existe, agrégalo al array de productos
-                    const newProduct = { productId: idProduct, quantity: 1 };
-    
-                    await CartModel.findByIdAndUpdate(
-                        idCart,
-                        { $push: { products: newProduct } },
-                        { upsert: true, new: true }
-                    );
-                }
-    
+                    // Si el producto no existe, lo agrego al array de productos
+                    const newProduct = { productId: idProduct};
+                    cartOk.products.push(newProduct);                    
+                }    
+                await cartOk.save()
                 return { message: 'Producto Guardado con exito en el carrito' };
             } else {
-                return { message: 'Cart no encontrado' };
+                return { message: 'El carrito no existe' };
             }
         } catch (error) {
             console.error('Error al guardar el producto en el carrito:', error);
             return { error: error.message };
         }
     }
+    
 }
