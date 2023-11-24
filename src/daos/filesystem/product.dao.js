@@ -1,14 +1,17 @@
 import fs from 'fs';
 
-export class ProductManager {
+export class ProductDaoFileSystem {
+    
     constructor(path) {
         this.path = path;
+        console.log(path);
     }
 
     async #readProducts() {  //Obtengo la informacion del JSON, de no existir devuelvo un array vacio - De esta manera puedo reutilizar esta parte de codigo en otros metodos
         try {
             if (fs.existsSync(this.path)) {
                 const data = await fs.promises.readFile(this.path, 'utf-8');
+                
                 return JSON.parse(data);
             }
             return []
@@ -17,12 +20,24 @@ export class ProductManager {
         }
     }
 
-    async getProducts(id) { //Obtengo la lista de todos los productos, en caso de recibir un id, devuelve un producto si existe de esta manera unifico getProduct y getProductById
+    async getAll() { //Obtengo la lista de todos los productos, en caso de recibir un id, devuelve un producto si existe de esta manera unifico getProduct y getProductById
+        try {
+            const products = await this.#readProducts(); //Reutilizo metodo
+            if (products) {
+                return products
+            } else {
+                return [];
+            }
+        } catch (error) {
+            console.error('Error al obtener productos:', error);
+        }
+    }
+    async getById(id) { //Obtengo la lista de todos los productos, en caso de recibir un id, devuelve un producto si existe de esta manera unifico getProduct y getProductById
         try {
             const products = await this.#readProducts(); //Reutilizo metodo
 
             if (id && id > 0) {
-                const product = products.find((product) => product.id === id);
+                const product = products.find((product) => product.id === Number(id)); 
                 return product || null;
             } else {
                 return products;
@@ -32,7 +47,7 @@ export class ProductManager {
         }
     }
 
-    async addProduct({ title, description, code, price, stock, category, thumbnails }) { //Obtengo la información del JSON y actualizo el array, luego actualizo el JSON
+    async create({ title, description, code, price, stock, category, thumbnails }) { //Obtengo la información del JSON y actualizo el array, luego actualizo el JSON
 
         try {
             const products = await this.#readProducts(); //Reutilizo metodo
@@ -65,7 +80,7 @@ export class ProductManager {
         }
     }
 
-    async updateProduct(id, fieldsToUpdate) {
+    async update(id, fieldsToUpdate) {
         try {
             const products = await this.#readProducts();
             const productIndex = products.findIndex(product => product.id === id);
@@ -97,7 +112,7 @@ export class ProductManager {
     }
 
 
-    async deleteProducts(ids) { // Obtengo los productos del JSON, utilizo un filter y como callback un includes para descargar los productos cuyo ID esten en el array "ids" que se recibe como parametro
+    async delete(ids) { // Obtengo los productos del JSON, utilizo un filter y como callback un includes para descargar los productos cuyo ID esten en el array "ids" que se recibe como parametro
         try {
             const products = await this.#readProducts();
             const newProducts = products.filter(product => !ids.includes(product.id)); // De esta manera genero un nuevo array con los productos que no quiero eliminar

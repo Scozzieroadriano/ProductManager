@@ -1,9 +1,15 @@
 import * as services from "../services/product.services.js";
 
-export const getAllProducts = async (req, res, next) => {
+export const getAll = async (req, res, next) => {
     try {
         const response = await services.getAll();
-        res.status(200).json(response)
+        const limit = parseInt(req.query.limit) || 0;
+        if (limit > 0) {
+            const limitProducts = response.slice(0, limit);
+            res.status(200).json(limitProducts);
+        } else {
+            res.status(200).json(response);
+        }
     } catch (error) {
         next(error.message);
     }

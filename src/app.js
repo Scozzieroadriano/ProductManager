@@ -1,8 +1,9 @@
 import express from 'express';
 import productRouter from './routes/productRouter.js';
-//import cartRouter from './routes/cartRouter.js';
+import cartRouter from './routes/cartRouter.js';
 import { __dirname } from './utils.js';
 import { initMongoDB } from './daos/mongodb/connection.js';
+import { errorHandler } from './middelwares/errorHandler.js';
 import handlebars from 'express-handlebars'
 import viewRouter from './routes/views.router.js'
 //import { Server } from 'socket.io';
@@ -15,8 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/../public/'));
 
 app.use('/api/products', productRouter);
-//app.use('/api/carts', cartRouter);
-
+app.use('/api/carts', cartRouter);
+app.use(errorHandler);
 //app.engine('handlebars', handlebars.engine());
 //app.set('views', __dirname + '/../views/');
 //app.set('view engine', 'handlebars');

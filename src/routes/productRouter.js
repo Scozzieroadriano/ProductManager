@@ -1,13 +1,14 @@
 import { Router } from "express";
+import {validationProduct } from "../middelwares/validationMid.js";
 import * as controller from "../controllers/product.controllers.js";
 
 const router = Router();
 
-router.get("/", controller.getAllProducts);
+router.get("/", controller.getAll);
 
 router.get("/:id", controller.getById);
 
-router.post("/", controller.create);
+router.post("/",validationProduct, controller.create);
 
 router.put("/:id", controller.update);
 

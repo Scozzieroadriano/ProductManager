@@ -1,11 +1,13 @@
 import { Router } from "express";
-import { CartManager } from "../daos/filesystem/cart.dao.js";
-import { ProductManager } from '../daos/filesystem/product.dao.js.js';
+import * as cartController from "../controllers/cart.controller.js";
 
 const router = Router();
-const cartManager = new CartManager('./src/data/carts.json') //Instancio la clase para acceder a sus métodos
-const productManager = new ProductManager('./src/data/products.json')
 
+router.post("/", cartController.create);
+export default router;
+//Instancio la clase para acceder a sus métodos
+//const productManager = new ProductDaoFileSystem('.../daos/filesystem/data/products.json')
+/*
 router.post('/', async (req, res) => {
     try {
         const newCart = await cartManager.createCart();
@@ -67,4 +69,5 @@ router.post('/:cId/products/:idProd', async (req, res) => {
     }
 })
 
-export default router;
+
+*/
