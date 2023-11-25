@@ -8,7 +8,7 @@ const inputDescription = document.getElementById('description');
 const inputCode = document.getElementById('code');
 const inputPrice = document.getElementById('price');
 const inputCategory = document.getElementById('category');
-const inputImage = document.getElementById('image');
+const inputImage = document.getElementById('thumbnails');
 const inputStock = document.getElementById('stock');
 const productList = document.getElementById('product-list');
 //declaro los inputs
@@ -19,9 +19,9 @@ form.onsubmit = (e) => {
     const code = inputCode.value
     const price = inputPrice.value
     const category = inputCategory.value
-    const image = inputImage.value
+    const thumbnails = inputImage.value
     const stock = inputStock.value
-    const product = {title,description,code,price,category,image,stock}
+    const product = {title,description,code,price,category,thumbnails,stock}
     //creo el objeto con los datos del input
     socketClient.emit('newProduct', product);
     //emito la info al serveer
@@ -43,13 +43,13 @@ socketClient.on('getProducts', (data) => {
         productItem.innerHTML = `
           <h3>${product.title}</h3>
           <p>Description: ${product.description}</p>
-          <p>ID: ${product.id}</p>
+          <p>ID: ${product._id}</p>
           <p>Price: $${product.price}</p>
           <p>Stock: ${product.stock}</p>
           <p>Category: ${product.category}</p>
-          <img src="${product.thumbnails}" alt="Product Image" width="50" height="50">
+          <img src="${product.thumbnails ? product.thumbnails : '../images/placeholder.jpg'}" alt="Product Image" width="50" height="50">
         `;
-  
+        
         productList.appendChild(productItem);
       });
   });

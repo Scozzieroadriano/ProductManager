@@ -1,10 +1,11 @@
 import { Server } from 'socket.io';
 import ProductDaoMongoDB from '../daos/mongodb/product.dao.js';
+import MessageDaoMongoDB from '../daos/mongodb/message.dao.js';
 
 const configureSocketIO = (httpServer) => {
     const socketServer = new Server(httpServer);
     const productDao = new ProductDaoMongoDB();
-
+    const messageDao = new MessageDaoMongoDB();
     socketServer.on('connection', async (socket) => {
         console.log(`Usuario Conectado ${socket.id}`);
         
@@ -39,7 +40,31 @@ const configureSocketIO = (httpServer) => {
         socket.on('disconnect', () => {
             console.log(`Usuario Desconectado ${socket.id}`);
         });
+
+        console.log('🟢 ¡New connection!', socket.id);
+
+        
+    socketServer.emit('messages', await messageDao.getAll());
+
+    socket.on('disconnect', ()=>console.log('🔴 ¡User disconnect!', socket.id));
+    socket.on('newUser', (user)=>console.log(`⏩ ${user} inició sesión`));
+
+    socket.on('chat:message', async(msg)=>{
+        await messageDao.create(msg);
+        socketServer.emit('messages', await messageDao.getAll());
+    })
+
+    socket.on('newUser', (user)=>{
+        socket.broadcast.emit('newUser', user)
+    })
+
+    socket.on('chat:typing', (data)=>{
+        socket.broadcast.emit('chat:typing', data)
+    })
+        
     });
+
+    
 };
 
 export default configureSocketIO;

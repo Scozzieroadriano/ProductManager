@@ -5,10 +5,9 @@ export const messageCollectionName = "message";
 const messageSchema = new Schema({
     user: {
       type: String,
-      required: true,
       index: true,
     },
-    msg: {
+    message: {
       type: String,
       required: true,
     },
