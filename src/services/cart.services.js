@@ -1,5 +1,7 @@
 import cartDaoMongoDB from "../daos/mongodb/cart.dao.js";
+import { CartDaoFileSystem } from "../daos/filesystem/cart.dao.js";
 
+//const cartDao = new CartDaoFileSystem('./src/daos/filesystem/data/carts.json'); DESCOMENTAR PARA CAMBIAR PERSISTENCIA
 const cartDao = new cartDaoMongoDB();
 
 export const create = async () => {

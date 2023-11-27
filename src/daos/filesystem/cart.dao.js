@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export class CartManager {
+export class CartDaoFileSystem {
     constructor(path) {
         this.path = path;
     }
