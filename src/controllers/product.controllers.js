@@ -3,6 +3,7 @@ import * as services from "../services/product.services.js";
 export const getAll = async (req, res, next) => {
     try {
         const response = await services.getAll();
+        
         const limit = parseInt(req.query.limit) || 0;
         if (limit > 0) {
             const limitProducts = response.slice(0, limit);
@@ -56,5 +57,38 @@ export const remove = async (req, res, next) => {
         else res.status(200).json({ msg: `Producto id: ${id} eliminado` });
     } catch (error) {
         next(error.message);
+    }
+};
+
+export const getAllRealTime = async () => {
+    try {
+        const response = await services.getAll();
+        return response;
+    } catch (error) {
+        throw error; // Propaga el error para manejarlo en el lugar adecuado
+    }
+};
+export const createRealTime = async (productData) => {
+    try {
+        const newProd = await services.create(productData);
+        if (!newProd) {
+            throw new Error("Error al crear el producto");
+        }
+        return newProd;
+    } catch (error) {
+        console.log(error.message);
+        throw error; 
+    }
+};
+export const removeRealtime = async (productId) => {
+    try {
+        const prodDel = await services.remove(productId);
+        if (!prodDel) {
+            throw new Error("Error al eliminar el producto");
+        }
+        return { msg: `Producto id: ${productId} eliminado` };
+    } catch (error) {
+        console.log(error.message);
+        throw error; // Propaga el error para manejarlo en el lugar adecuado
     }
 };

@@ -23,6 +23,7 @@ form.onsubmit = (e) => {
     const stock = inputStock.value
     const product = {title,description,code,price,category,thumbnails,stock}
     //creo el objeto con los datos del input
+    console.log(product);
     socketClient.emit('newProduct', product);
     //emito la info al serveer
 }

@@ -6,7 +6,7 @@ import { initMongoDB } from './daos/mongodb/connection.js';
 import { errorHandler } from './middelwares/errorHandler.js';
 import handlebars from 'express-handlebars'
 import viewRouter from './routes/views.router.js'
-import configureSocketIO from './socket/realtimeproducts.socket.js';
+import configureSocketIO from './socket/socket.js';
 
 const app = express();
 app.use(express.json());

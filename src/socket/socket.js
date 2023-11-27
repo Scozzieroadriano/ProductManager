@@ -1,37 +1,35 @@
 import { Server } from 'socket.io';
-import ProductDaoMongoDB from '../daos/mongodb/product.dao.js';
 import MessageDaoMongoDB from '../daos/mongodb/message.dao.js';
-
+import * as controller from '../controllers/product.controllers.js';
 const configureSocketIO = (httpServer) => {
     const socketServer = new Server(httpServer);
-    const productDao = new ProductDaoMongoDB();
     const messageDao = new MessageDaoMongoDB();
     socketServer.on('connection', async (socket) => {
         console.log(`Usuario Conectado ${socket.id}`);
         
-        // Obtén la lista de productos al inicio
-        const listProducts = await productDao.getAll();
+        //lista de productos al inicio
+        const listProducts = await controller.getAllRealTime();
 
-        // Envía la lista de productos a todos los clientes al conectar
+        // lista de productos a todos los clientes al conectar
         socket.emit('getProducts', listProducts);
 
         socket.on('newProduct', async (newProduct) => {
-            // Agrega el nuevo producto
-            await productDao.create(newProduct);
+            // nuevo producto
+            await controller.createRealTime(newProduct);
 
-            // Obtén la lista actualizada de productos
-            const updatedProducts = await productDao.getAll();
+            // lista actualizada de productos
+            const updatedProducts = await controller.getAllRealTime();
 
-            // Emite la lista actualizada a todos los clientes
+            //lista actualizada a todos los clientes
             socketServer.emit('getProducts', updatedProducts);
         });
 
         socket.on('deleteProduct', async (deletedProduct) => {
             // Elimina el producto
-            await productDao.delete(deletedProduct);
+            await controller.removeRealtime(deletedProduct);
 
             // Obtén la lista actualizada de productos
-            const updatedProducts = await productDao.getAll();
+            const updatedProducts = await controller.getAllRealTime();
 
             // Emite la lista actualizada a todos los clientes
             socketServer.emit('getProducts', updatedProducts);
