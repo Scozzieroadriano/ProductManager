@@ -65,9 +65,10 @@ export const getAllRealTime = async () => {
         const response = await services.getAll();
         return response;
     } catch (error) {
-        throw error; // Propaga el error para manejarlo en el lugar adecuado
-    }
+        throw error; 
 };
+}
+
 export const createRealTime = async (productData) => {
     try {
         const newProd = await services.create(productData);
@@ -89,6 +90,6 @@ export const removeRealtime = async (productId) => {
         return { msg: `Producto id: ${productId} eliminado` };
     } catch (error) {
         console.log(error.message);
-        throw error; // Propaga el error para manejarlo en el lugar adecuado
+        throw error; 
     }
 };

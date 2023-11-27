@@ -1,6 +1,7 @@
 import { Server } from 'socket.io';
-import MessageDaoMongoDB from '../daos/mongodb/message.dao.js';
+import MessageDaoMongoDB from '../daos/mongodb/message.dao.js'; //Dejo el dao de los msg para mostrar las diferencias del controller de productos
 import * as controller from '../controllers/product.controllers.js';
+
 const configureSocketIO = (httpServer) => {
     const socketServer = new Server(httpServer);
     const messageDao = new MessageDaoMongoDB();
@@ -28,10 +29,10 @@ const configureSocketIO = (httpServer) => {
             // Elimina el producto
             await controller.removeRealtime(deletedProduct);
 
-            // Obtén la lista actualizada de productos
+            // la lista actualizada de productos
             const updatedProducts = await controller.getAllRealTime();
 
-            // Emite la lista actualizada a todos los clientes
+            //lista actualizada a todos los clientes
             socketServer.emit('getProducts', updatedProducts);
         });
 

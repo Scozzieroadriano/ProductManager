@@ -1,11 +1,23 @@
 # Product Manager
 
-Ahora la clase Product Manager permite administrar productos y carritos de compra utilizando un archivo JSON para almacenar los datos. Está conectada a un servidor Express que te permite realizar diferentes operaciones relacionadas con productos y carritos.
+ProductManager permite administrar productos y carritos de compra utilizando dos tipos de persistencia de datos, FileSystem y MongoDB con Mongoose.
+Consta de un modelo MVC (MODELO VISTA CONTROLADOR) divido por distintas capas para un óptimo manejo de errores y funcionamiento.
+
+La lógica principal se encuentra en la capa `daos`.
+     En daos se encuentran todas las peticiones que conforman el CRUD en la fuente de datos, tambien disponemos de los schemas que componen cada modelo para formar los documentos y colecciones en MONGO.
+La lógcia de negocio de la aplicacion está en la capa `services`.
+    En services se realizan podemos añandir más logica a la información que recibimos desde el dao, por ehemplo validar un tipo de dato, o transformar los datos obtenidos.
+Solicitudes HTTP en la capa `controllers`.
+    Procesamos la entrada del cliente, llamamos a los servicios y devolvemos una respuesta.
+Por ultimo la capa `routes`.
+    Manejamos la entrada y salida de las solicitudes HTTP. Asignamos una funcion del controlador a una ruta especifica y todas esas resppuestas recibidas las enviamos al cliente.
+
 
 ## Instalación
 
-1. Para utilizar la clase `ProductManager`, primero debes importarla y crear una instancia de la misma en tu aplicación (app.js, por ejemplo).
-2. Debes descargar un cliente que te permita realizar solicitudes HTTP, como Postman, o también puedes utilizar la consola web para este tipo de peticiones.
+1. Para utilizar la clase `ProductManager`, deberas hacer un git clone sobre el repositorio en Github.
+2. Instalar todos los paquetes utilizados.
+3. Debes descargar un cliente que te permita realizar solicitudes HTTP, como Postman, o también puedes utilizar la consola web para este tipo de peticiones.
 
 ## Uso
 
@@ -24,6 +36,36 @@ Puedes realizar las siguientes operaciones con la API:
 - Ruta: `GET http://localhost:8080/api/products/:productId`
 - Descripción: Obtén los detalles de un producto específico proporcionando su ID.
 - Ejemplo: `http://localhost:8080/api/products/2` para obtener los detalles del producto con ID 2.
+
+#### Crear un producto
+
+- Ruta: `POST http://localhost:8080/api/products`
+- Descripción: Crea un producto específico proporcionando su información correcta.
+- Ejemplo: `http://localhost:8080/api/products` para crear un producto con lasiguiente informacion.
+        {
+            "title": "Producto de prueba Luis",
+            "description": "Este es un producto de prueba",
+            "code": "123956",
+            "price": 99.99,
+            "status": true,
+            "stock": 10,
+            "category": "Prueba",
+            "thumbnails": ""
+        }
+##### Actualizar un producto
+
+- Ruta: `POST http://localhost:8080/api/products/:productId`
+- Descripción: Actualiza un producto específico proporcionando su id y la información a cambiar.
+- Ejemplo: `http://localhost:8080/api/products/64e57ca8d86d4ba4e6a38d1f` para actualizar un producto con lasiguiente informacion.
+        {
+        "title": "Cambiado por luis3"
+        } 
+
+#### ELIMINAR UN PRODUCTO  
+- Ruta: `DELETE http://localhost:8080/api/products/:productId`
+- Descripción: Elimina un producto específico proporcionando su id.
+- Ejemplo: `http://localhost:8080/api/products/64e57ca8d86d4ba4e6a38d1f` para eliminar un producto.
+
 
 ### Carritos
 
@@ -58,5 +100,6 @@ Para iniciar el servidor Express y comenzar a utilizar estas rutas y operaciones
 -Se implementan las librerias express-handlebars y socket.io para interactuar con el front en tiempo real.
 -Se Crea un endpoint /home en el cual se obtienen los productos en su totalidad
 -Se Crea un endpoint /realtimeproducts en el cual obtenemos los productos en su totalidad y podemos agregar desde un formulario más productos, tambien podemos borrar por id y el dom se actualiza en tiempo real
+-Se crea un endpoint /chat donde podemos chatear con otros usuarios  `(front y socket aportado por el profe, yo adapte las funciones importe controllers y separe por capas)`
 
 ## LA APP AVISA POR CONSOLA DEL SERVIDOR SI UN CLIENTE SE CONECTA O DESCONECTA
