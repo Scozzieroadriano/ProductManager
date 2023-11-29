@@ -10,7 +10,7 @@ export default class CartDaoMongoDB {
     }
     async getAll() {
         try {    
-          const response = await CartModel.find({});
+          const response = await CartModel.find();
           return response;
         } catch (error) {
           console.log(error);

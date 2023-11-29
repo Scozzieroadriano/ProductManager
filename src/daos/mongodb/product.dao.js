@@ -1,10 +1,10 @@
 import { ProductModel } from "./models/product.model.js";
 
 export default class ProductDaoMongoDB {
-  async getAll() {
+  async getAll(page = 1, limit = 5) {
     try {
 
-      const response = await ProductModel.find({});
+      const response = await ProductModel.paginate({}, { page, limit });
       return response;
     } catch (error) {
       console.log(error);
@@ -26,9 +26,9 @@ export default class ProductDaoMongoDB {
       if (products.some(product => product.code === obj.code)) {
         const alert = { message: `Ya existe un producto con el código: ${obj.code}` }
         return alert
-      } else { 
-      const response = await ProductModel.create(obj);
-      return response;
+      } else {
+        const response = await ProductModel.create(obj);
+        return response;
       }
     } catch (error) {
       console.log(error,);

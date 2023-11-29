@@ -2,16 +2,20 @@ import * as services from "../services/product.services.js";
 
 export const getAll = async (req, res, next) => {
     try {
-        const response = await services.getAll();
+        const { page, limit } = req.query;
+        const response = await services.getAll(page, limit);
         
-        const limit = parseInt(req.query.limit) || 0;
-        if (limit > 0) {
-            const limitProducts = response.slice(0, limit);
-            res.status(200).json(limitProducts);
-        } else {
-            res.status(200).json(response);
-        }
-        
+        const next = response.hasNextPage ? `http://localhost:8080/api/products?page=${response.nextPage}` : null;
+        const prev = response.hasPrevPage ? `http://localhost:8080/api/products?page=${response.prevPage}` : null;
+        res.status(200).json({
+            results: response.docs,
+            info:{
+                count:response.totalDocs,
+                pages: response.totalPages,
+                next,
+                prev
+            }
+        });
     } catch (error) {
         console.log(error.message);
     }
@@ -65,8 +69,8 @@ export const getAllRealTime = async () => {
         const response = await services.getAll();
         return response;
     } catch (error) {
-        throw error; 
-};
+        throw error;
+    };
 }
 
 export const createRealTime = async (productData) => {
@@ -78,7 +82,7 @@ export const createRealTime = async (productData) => {
         return newProd;
     } catch (error) {
         console.log(error.message);
-        throw error; 
+        throw error;
     }
 };
 export const removeRealtime = async (productId) => {
@@ -90,6 +94,6 @@ export const removeRealtime = async (productId) => {
         return { msg: `Producto id: ${productId} eliminado` };
     } catch (error) {
         console.log(error.message);
-        throw error; 
+        throw error;
     }
 };

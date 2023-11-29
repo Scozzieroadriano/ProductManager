@@ -2,9 +2,9 @@ import ProductDaoMongoDB from "../daos/mongodb/product.dao.js";
 import { ProductDaoFileSystem } from "../daos/filesystem/product.dao.js";
 const productDao = new ProductDaoMongoDB();
 //const productDao = new ProductDaoFileSystem('./src/daos/filesystem/data/products.json') //DESCOMENTAR PARA CAMBIAR PERSISTENCIA DE ARCHIVOS
-export const getAll = async () => {
+export const getAll = async (page, limit) => {
     try {
-        return await productDao.getAll();        
+        return await productDao.getAll(page, limit);        
     } catch (error) {
         console.log(error);
     }
