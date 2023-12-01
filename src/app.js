@@ -29,4 +29,4 @@ await initMongoDB();
 const PORT = 8080;
 const httpServer = app.listen(PORT, () => console.log(`Server Ok on Port ${PORT}`));
 
-//configureSocketIO(httpServer)
+configureSocketIO(httpServer)

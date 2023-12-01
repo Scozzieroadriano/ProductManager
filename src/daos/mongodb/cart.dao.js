@@ -10,7 +10,7 @@ export default class CartDaoMongoDB {
   }
   async getAll() {
     try {
-      const response = await CartModel.find();
+      const response = await CartModel.find()
       return response;
     } catch (error) {
       console.log(error);
@@ -31,12 +31,12 @@ export default class CartDaoMongoDB {
       const cartOk = await CartModel.findById(idCart);
 
       if (cartOk) {
-        const existingProductIndex = cartOk.products.findIndex(producto => String(producto._id) === String(idProduct));
+        const existingProductIndex = cartOk.products.findIndex(producto => String(producto.product._id) === String(idProduct));
 
         if (existingProductIndex !== -1) {
           cartOk.products[existingProductIndex].quantity += 1;
         } else {
-          const newProduct = { _id: idProduct, quantity: 1 };
+          const newProduct = { product: idProduct, quantity: 1 };
           cartOk.products.push(newProduct);
         }
 
@@ -54,15 +54,10 @@ export default class CartDaoMongoDB {
   async remove(idCart, idProduct) {
     try {
       const cart = await CartModel.findById(idCart);
-      let productExists = false;
       if (cart) {
-        cart.products.forEach(producto => {
-          if (String(producto._id) === String(idProduct)) {
-            productExists = true;
-          }
-        });
-        if (productExists) {
-          cart.products.pull({ _id: idProduct });
+        const existingProductIndex = cart.products.findIndex(producto => String(producto.product._id) === String(idProduct));
+        if (existingProductIndex !== -1) {
+          cart.products.pull({ _id: cart.products[existingProductIndex]._id });
           return await cart.save();
         } else {
           throw { message: 'El producto no existe en el carrito' };
@@ -78,9 +73,14 @@ export default class CartDaoMongoDB {
   async deleteCart(cId) {
     try {
       const response = await CartModel.findByIdAndDelete(cId);
-      return response;
+  
+      if (response) {
+        return response;
+      } else {
+        throw { message: 'El carrito no existe' };
+      }
     } catch (error) {
-      console.log(error);
+      return { error: error.message };
     }
   }
 
@@ -102,7 +102,7 @@ export default class CartDaoMongoDB {
     try {
       const cartOk = await CartModel.findById(cId);
       if (cartOk) {
-        const existingProductIndex = cartOk.products.findIndex(producto => String(producto._id) === String(pId));
+        const existingProductIndex = cartOk.products.findIndex(producto => String(producto.product._id) === String(pId));
 
         if (existingProductIndex !== -1) {
           // Si el producto ya existe, incremento la cantidad en 1
@@ -117,22 +117,25 @@ export default class CartDaoMongoDB {
       console.log(error);
     }
   }
-  async cartUpdate(cId,newProducts){
-    console.log(newProducts);
+  async cartUpdate(cId, newProducts) {
     try {
       const updatedCart = await CartModel.findByIdAndUpdate(
         cId,
-        { products: newProducts },
+        { products: newProducts.map(product => ({ product })) },
         { new: true, runValidators: true }
-    );
+      );
   
-    if (!updatedCart) {
+      if (!updatedCart) {
         return { error: true, message: "El carrito no existe" };
-    }  
-    return { error: false, message: "Carrito actualizado" };    
-      
+      }
+  
+      return { error: false, message: "Carrito actualizado", updatedCart };
+  
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      return { error: true, message: "Error al actualizar el carrito" };
     }
   }
+  
+  
 }

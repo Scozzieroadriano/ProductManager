@@ -51,7 +51,6 @@ export const remove = async (cId, idProd) => {
 };
 export const removeCart = async (cId) => {
     try {
-        console.log(cId);
         const cartDel = await cartDao.deleteCart(cId);
         if (!cartDel) return false;
         else return cartDel;
