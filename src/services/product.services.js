@@ -2,9 +2,9 @@ import ProductDaoMongoDB from "../daos/mongodb/product.dao.js";
 import { ProductDaoFileSystem } from "../daos/filesystem/product.dao.js";
 const productDao = new ProductDaoMongoDB();
 //const productDao = new ProductDaoFileSystem('./src/daos/filesystem/data/products.json') //DESCOMENTAR PARA CAMBIAR PERSISTENCIA DE ARCHIVOS
-export const getAll = async (page, limit) => {
+export const getAll = async (page, limit, category,sort) => {
     try {
-        return await productDao.getAll(page, limit);        
+        return await productDao.getAll(page, limit, category,sort);        
     } catch (error) {
         console.log(error);
     }
@@ -48,5 +48,13 @@ export const remove = async (id) => {
     } catch (error) {
         console.log(error);
     }
+
 };
+export const sort = async (category) =>{
+    try {
+        return await productDao.sortProtuct(category)
+    } catch (error) {
+        logError(error);
+    }
+}
 

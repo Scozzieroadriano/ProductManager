@@ -1,15 +1,29 @@
 import { ProductModel } from "./models/product.model.js";
 
 export default class ProductDaoMongoDB {
-  async getAll(page = 1, limit = 5) {
+  async getAll(page = 1, limit = 10, category, sort) {
     try {
+      // Construir el objeto de búsqueda basado en los parámetros proporcionados
+      let query = {};
 
-      const response = await ProductModel.paginate({}, { page, limit });
+      // Agregar filtro por categoría si se proporciona
+      if (category) {
+        query = { 'category': category };
+      }
+      const options = { page, limit };
+      if (sort) {
+        options.sort = { price: sort === 'asc' ? 1 : -1 };
+      }
+      const response = await ProductModel.paginate(query, options);
+
       return response;
     } catch (error) {
       console.log(error);
+      // Puedes lanzar una excepción aquí si lo prefieres
+      throw new Error('Error al obtener productos');
     }
   }
+
 
   async getById(id) {
     try {

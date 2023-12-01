@@ -2,19 +2,24 @@ import * as services from "../services/product.services.js";
 
 export const getAll = async (req, res, next) => {
     try {
-        const { page, limit } = req.query;
-        const response = await services.getAll(page, limit);
+        const { page, limit, category,sort } = req.query;
+        const response = await services.getAll(page,limit,category,sort);
         
-        const next = response.hasNextPage ? `http://localhost:8080/api/products?page=${response.nextPage}` : null;
-        const prev = response.hasPrevPage ? `http://localhost:8080/api/products?page=${response.prevPage}` : null;
+        const nextLink = response.hasNextPage ? `http://localhost:8080/api/products?page=${response.nextPage}` : null;
+        const prevLink = response.hasPrevPage ? `http://localhost:8080/api/products?page=${response.prevPage}` : null;
+        
         res.status(200).json({
-            results: response.docs,
-            info:{
-                count:response.totalDocs,
-                pages: response.totalPages,
-                next,
-                prev
-            }
+            status: response.docs.length > 0 ? 'success' : 'error',
+            payload: response.docs,
+            totalPages: response.totalPages,
+            prevPage: response.prevPage,            
+            nextPage: response.nextPage,
+            page: response.page,
+            hasPrevPage: response.hasPrevPage ? 'Sí existe' : 'No existe',
+            hasNextPage: response.hasNextPage ? 'Sí existe' : 'No existe',
+            prevLink,
+            nextLink
+            
         });
     } catch (error) {
         console.log(error.message);
