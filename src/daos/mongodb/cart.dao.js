@@ -118,6 +118,7 @@ export default class CartDaoMongoDB {
     }
   }
   async cartUpdate(cId,newProducts){
+    console.log(newProducts);
     try {
       const updatedCart = await CartModel.findByIdAndUpdate(
         cId,
