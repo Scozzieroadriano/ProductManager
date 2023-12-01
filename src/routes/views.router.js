@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as controller from "../controllers/view.controller.js";
-import * as msgController from "../controllers/message.controller.js"
+import * as msgController from "../../message.controller.js"
 
 
 const router = Router();

@@ -89,6 +89,33 @@ Puedes realizar las siguientes operaciones con la API:
 - Ruta: `GET /carts/`
 - Descripción: Obtiene los detalles de todos los carritos creados.
 
+##### Eliminar producto 
+
+- Ruta: `DELETE /carts/:cid/products/:idprod`
+- Descripción: Elimina el producto seleccionado del carrito
+
+#### Actualizar carrito
+
+- Ruta: `PUT /carts/:cid`
+- Descripción: Actualiza el carrito con el array deseado, debe tener el mismo formato que el modelo en mongoose.
+
+#### Actualizar cantidad de producto
+
+- Ruta: `PUT /carts/:cid/products/:idprod`
+- Descripción: Solo actualizara la cantidad de un producto seleccionado que se encuentre en el carrito,
+con la cantidad que ingrese por body
+
+#### Borrar todos los productos
+
+- Ruta: `DELETE /carts/:cid`
+- Descripción: Elimina todos los productos dentro del carrito, deja un array vacio en el carrito seleccionado
+
+#### Borrar carrito
+- Ruta: `DELETE /carts/:cid`
+- Descripción: Elimina el carrito seleccionado
+
+
+
 ### Iniciar el servidor
 
 Para iniciar el servidor Express y comenzar a utilizar estas rutas y operaciones, ejecuta:
@@ -103,3 +130,5 @@ Para iniciar el servidor Express y comenzar a utilizar estas rutas y operaciones
 -Se crea un endpoint /chat donde podemos chatear con otros usuarios  `(front y socket aportado por el profe, yo adapte las funciones importe controllers y separe por capas)`
 
 ## LA APP AVISA POR CONSOLA DEL SERVIDOR SI UN CLIENTE SE CONECTA O DESCONECTA
+
+## SE IMPLEMENTA POPULATE PARA OBTENER TODA LA INFORMACION AL BUSCAR TODOS LOS PRODUCTOS TANTO LOS EXISTENTES COMO LOS QUE SE ENCUENTRAN DENTRO DE UN CARRITO.

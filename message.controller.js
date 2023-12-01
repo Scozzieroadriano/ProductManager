@@ -1,4 +1,4 @@
-import * as services from '../services/message.services.js';
+import * as services from './src/services/message.services.js';
 
 export const getAll = async (req, res) => {
     try {

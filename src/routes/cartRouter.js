@@ -10,7 +10,7 @@ router.post('/:cId/products/:idProd', cartController.update);
 
 router.delete('/:cId/products/:idProd', cartController.remove);
 router.delete('/:cId', cartController.removeCart);
-router.delete('/:cId/products', cartController.removeAllProducts);
+router.delete('/:cId', cartController.removeAllProducts);
 router.put("/:cId/products/:pId", cartController.updateQuantity)
 router.put('/:cId', cartController.updateCart);
 
