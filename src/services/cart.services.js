@@ -60,9 +60,9 @@ export const removeCart = async (cId) => {
     }
 
 };
-export const removeAllProducts = async (cId) => {
+export const removeAllProducts = async (newQuantity ) => {
     try {
-        const cleanCart = await cartDao.removeAllProducts(cId);
+        const cleanCart = await cartDao.removeAllProducts(newQuantity );
         if (cleanCart.error){
             return false
         } else {
@@ -70,5 +70,23 @@ export const removeAllProducts = async (cId) => {
         }
     } catch (error) {
         return { error: true, message: error.message };
+    }
+};
+export const updateQuantity = async (cId, pId,quantity) => {
+    try {
+        const prodUpd = await cartDao.updateQuantity(cId, pId,quantity);
+        if (!prodUpd) return false;
+        else return prodUpd;
+    } catch (error) {
+        console.log(error);
+    }
+};
+export const updateCart = async (cId, newProducts) => {
+    try {
+        const cartUpdate = await cartDao.cartUpdate(cId, newProducts);
+        if (!cartUpdate) return false;
+        else return cartUpdate;
+    } catch (error) {
+        console.log(error);
     }
 };

@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 export const cartsCollectionName = "carts";
 
 const cartProductSchema = new Schema({
-  productId: { type: Schema.Types.ObjectId, ref: 'products' },
+  _id: { type: Schema.Types.ObjectId, ref: 'products' }, 
   quantity: { type: Number, default: 1 }
 });
 
@@ -12,7 +12,7 @@ const cartSchema = new Schema({
 });
 
 cartSchema.pre('find', function () {
-  this.populate('products.productId');
+  this.populate('products._id'); 
 });
 
 export const CartModel = model(cartsCollectionName, cartSchema);

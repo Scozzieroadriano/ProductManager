@@ -31,14 +31,12 @@ export default class CartDaoMongoDB {
       const cartOk = await CartModel.findById(idCart);
 
       if (cartOk) {
-        const existingProductIndex = cartOk.products.findIndex(producto => String(producto.productId) === String(idProduct));
+        const existingProductIndex = cartOk.products.findIndex(producto => String(producto._id) === String(idProduct));
 
         if (existingProductIndex !== -1) {
-          // Si el producto ya existe, incremento la cantidad en 1
           cartOk.products[existingProductIndex].quantity += 1;
         } else {
-          // Si el producto no existe, lo agrego al array de productos con cantidad inicial 1
-          const newProduct = { productId: idProduct, quantity: 1 };
+          const newProduct = { _id: idProduct, quantity: 1 };
           cartOk.products.push(newProduct);
         }
 
@@ -59,12 +57,12 @@ export default class CartDaoMongoDB {
       let productExists = false;
       if (cart) {
         cart.products.forEach(producto => {
-          if (String(producto.productId) === String(idProduct)) {
+          if (String(producto._id) === String(idProduct)) {
             productExists = true;
           }
         });
         if (productExists) {
-          cart.products.pull({ productId: idProduct });
+          cart.products.pull({ _id: idProduct });
           return await cart.save();
         } else {
           throw { message: 'El producto no existe en el carrito' };
@@ -100,4 +98,40 @@ export default class CartDaoMongoDB {
 
   }
 
+  async updateQuantity(cId, pId, quantity) {
+    try {
+      const cartOk = await CartModel.findById(cId);
+      if (cartOk) {
+        const existingProductIndex = cartOk.products.findIndex(producto => String(producto._id) === String(pId));
+
+        if (existingProductIndex !== -1) {
+          // Si el producto ya existe, incremento la cantidad en 1
+          cartOk.products[existingProductIndex].quantity = quantity;
+        } else {
+          throw error({ message: " El producto no existe en el carrito " })
+        }
+      }
+      return await cartOk.save();
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async cartUpdate(cId,newProducts){
+    try {
+      const updatedCart = await CartModel.findByIdAndUpdate(
+        cId,
+        { products: newProducts },
+        { new: true, runValidators: true }
+    );
+  
+    if (!updatedCart) {
+        return { error: true, message: "El carrito no existe" };
+    }  
+    return { error: false, message: "Carrito actualizado" };    
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

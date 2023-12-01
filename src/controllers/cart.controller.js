@@ -82,3 +82,33 @@ export const removeAllProducts = async (req, res, next) => {
         next(error.message);
     }
 };
+export const updateQuantity = async (req, res, next) => {
+    try {
+        const { quantity } = req.body;
+        const { cId, pId } = req.params;
+        const response = await cartServices.updateQuantity(cId, pId, quantity);
+        if (!response) res.status(404).json({ msg: "Error al cambiar la cantidad!" });
+        else res.status(200).json(response);
+    } catch (error) {
+        next(error.message);
+    }
+};
+
+export const updateCart = async (req, res, next) => {
+    try {
+        const { cId } = req.params;
+        const { products } = req.body;
+
+        const updateCartResult = await cartServices.updateCart(cId, products);
+
+        if (updateCartResult.error) {
+            res.status(404).json({ msg: "No se pudo actualizar el carrito con los nuevos productos" });
+        } else if (updateCartResult.message === "Carrito actualizado") {
+            res.status(200).json({ msg: "Carrito actualizado exitosamente con los nuevos productos" });
+        } else {
+            res.status(404).json({ msg: "El carrito no existe" });
+        }
+    } catch (error) {
+        next(error.message);
+    }
+};
