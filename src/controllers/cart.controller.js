@@ -7,7 +7,7 @@ export const create = async (req, res, next) => {
         else res.status(200).json(newCart);
     } catch (error) {
         next(error.message);
-    }    
+    }
 };
 export const getAll = async (req, res, next) => {
     try {
@@ -36,12 +36,48 @@ export const getCartById = async (req, res, next) => {
 };
 export const update = async (req, res, next) => {
     try {
-        const { cId } = req.params;  
+        const { cId } = req.params;
         const { idProd } = req.params;
-        const cartUpdate = await cartServices.saveProduct(cId,idProd);
-        
+        const cartUpdate = await cartServices.saveProduct(cId, idProd);
+
         if (!cartUpdate) res.status(404).json({ msg: "Error al actualizar el carrito" });
         else res.status(200).json(cartUpdate);
+    } catch (error) {
+        next(error.message);
+    }
+};
+export const remove = async (req, res, next) => {
+    try {
+        const { cId, idProd } = req.params;
+        const deleteProductInCart = await cartServices.remove(cId, idProd);
+        if (deleteProductInCart.error) res.status(404).json({ msg: "Error al eliminar el producto " });
+        else res.status(200).json({ msg: "Prodcuto eliminado" });
+    } catch (error) {
+        next(error.message);
+    }
+};
+export const removeCart = async (req, res, next) => {
+    try {
+        const { cId } = req.params;
+        const cartDel = await cartServices.removeCart(cId);
+        if (cartDel.error) res.status(404).json({ msg: "Error al eliminar el  carrito" });
+        else res.status(200).json({ msg: `Carrito id: ${cId} eliminado` });
+    } catch (error) {
+        next(error.message);
+    }
+};
+export const removeAllProducts = async (req, res, next) => {
+    try {
+        const { cId } = req.params;
+        const removeAllProductsResult = await cartServices.removeAllProducts(cId);
+
+        if (removeAllProductsResult.error) {
+            res.status(404).json({ msg: "No se pudieron eliminar todos los productos del carrito" });
+        } else if (removeAllProductsResult.message === "Todos los productos eliminados") {
+            res.status(200).json({ msg: "Todos los productos del carrito eliminados" });
+        } else {
+            res.status(404).json({ msg: "El carrito no existe" });
+        }
     } catch (error) {
         next(error.message);
     }

@@ -6,7 +6,7 @@ const cartDao = new cartDaoMongoDB();
 
 export const create = async () => {
     try {
-        const newCart= await cartDao.createCart();
+        const newCart = await cartDao.createCart();
         if (!newCart) return false;
         else return newCart;
     } catch (error) {
@@ -16,7 +16,7 @@ export const create = async () => {
 
 export const getAll = async () => {
     try {
-        return await cartDao.getAll();        
+        return await cartDao.getAll();
     } catch (error) {
         console.log(error);
     }
@@ -38,5 +38,37 @@ export const saveProduct = async (idCart, idProduct) => {
         else return cartUpd;
     } catch (error) {
         console.log(error);
+    }
+};
+export const remove = async (cId, idProd) => {
+    try {
+        const deleteProductInCart = await cartDao.remove(cId, idProd);
+        if (!deleteProductInCart) return false;
+        else return deleteProductInCart;
+    } catch (error) {
+        console.log(error);
+    }
+};
+export const removeCart = async (cId) => {
+    try {
+        console.log(cId);
+        const cartDel = await cartDao.deleteCart(cId);
+        if (!cartDel) return false;
+        else return cartDel;
+    } catch (error) {
+        console.log(error);
+    }
+
+};
+export const removeAllProducts = async (cId) => {
+    try {
+        const cleanCart = await cartDao.removeAllProducts(cId);
+        if (cleanCart.error){
+            return false
+        } else {
+        return { message: "Todos los productos eliminados" };
+        }
+    } catch (error) {
+        return { error: true, message: error.message };
     }
 };
