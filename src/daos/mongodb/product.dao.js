@@ -19,7 +19,6 @@ export default class ProductDaoMongoDB {
       return response;
     } catch (error) {
       console.log(error);
-      // Puedes lanzar una excepción aquí si lo prefieres
       throw new Error('Error al obtener productos');
     }
   }
@@ -38,8 +37,8 @@ export default class ProductDaoMongoDB {
     try {
       const products = await ProductModel.find();
       if (products.some(product => product.code === obj.code)) {
-        const alert = { message: `Ya existe un producto con el código: ${obj.code}` }
-        return alert
+        const response = { message: `Ya existe un producto con el código: ${obj.code}` }
+        return response
       } else {
         const response = await ProductModel.create(obj);
         return response;
