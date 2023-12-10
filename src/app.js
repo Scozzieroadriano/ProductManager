@@ -10,6 +10,7 @@ import { errorHandler } from './middelwares/errorHandler.js';
 import handlebars from 'express-handlebars'
 import viewRouter from './routes/views.router.js'
 import configureSocketIO from './socket/socket.js';
+import userRouter from './routes/user.router.js';
 
 const app = express();
 
@@ -23,7 +24,7 @@ const mongoStoreOptions = {
     }),
     secret: '12345',
     resave: false,
-    saveUnitialized: false,
+    saveUninitialized : true,
     cookie: {
         maxAge: 120000
     }
@@ -39,12 +40,12 @@ app.use(errorHandler);
 app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 app.use("/api/users", userRouter);
-app.use('/', viewRouter);
 
 app.engine('handlebars', handlebars.engine());
 app.set('views', __dirname + '/../views/');
 app.set('view engine', 'handlebars');
 
+app.use('/views', viewRouter);
 
 await initMongoDB();
 

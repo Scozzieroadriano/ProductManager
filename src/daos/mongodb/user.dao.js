@@ -1,4 +1,4 @@
-import { UserModel } from "./models/user.model";
+import { UserModel } from "./models/user.model.js";
 
 export default class UserDao {
 
@@ -13,37 +13,38 @@ export default class UserDao {
 
     async register(user) {
         try {
-            const {email} = user;
+            const { email } = user;
             const userExists = await this.findUserByEmail(email);
-            if (!userExists) {
+    
+            if (userExists) {
+                throw new Error(`Ya existe un usuario con el email: ${email}`);
+            } else {
                 const response = await UserModel.create(user);
                 return response;
-            } else {
-                const response = { message: `Ya existe un usuario con el email: ${email}` }
-                return response
             }
         } catch (error) {
-            console.log(error);
+            throw new Error('Ocurrió un error durante el registro');
         }
     }
+    
 
     async login(user) {
         try {
-            const {email, password} = user;
-            const userExists = await this.findUserByEmail(email);
-            if (userExists) {
-                if (userExists.password === password) {
-                    return userExists;
-                } else {
-                    const response = { message: `Contraseña incorrecta` }
-                    return response
-                }
-            } else {
-                const response = { message: `No existe un usuario con el email: ${email}` }
+            const { email, password } = user;
+            const userExists = await UserModel.findOne({ email, password });
+    
+            if (!userExists) {
+                const response = ({error:`El email o la contraseña son incorrectos`});
                 return response
             }
+    
+            return userExists;
         } catch (error) {
-            console.log(error);
+            // Manejo del error
+            console.error(error); // Registrando el error para su seguimiento
+    
+            throw new Error('Ocurrió un error durante el inicio de sesión'); // Relanzar el error para la gestión global
         }
     }
+    
 }

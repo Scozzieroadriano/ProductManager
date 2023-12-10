@@ -3,7 +3,7 @@ import * as services from "../services/view.services.js";
 export const getAll = async (req, res, next) => {
     try {
         const response = await services.getAll();
-        const responseLiteral = response.map(producto => {
+        const responseLiteral = response.docs.map(producto => {
             return {
                 title: producto.title,
                 description: producto.description,
