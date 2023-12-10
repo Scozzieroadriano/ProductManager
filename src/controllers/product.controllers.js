@@ -4,7 +4,6 @@ export const getAll = async (req, res, next) => {
     try {
         const { page, limit, category,sort } = req.query;
         const response = await services.getAll(page,limit,category,sort);
-        
         const nextLink = response.hasNextPage ? `http://localhost:8080/api/products?page=${response.nextPage}` : null;
         const prevLink = response.hasPrevPage ? `http://localhost:8080/api/products?page=${response.prevPage}` : null;
         

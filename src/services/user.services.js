@@ -16,14 +16,17 @@ export default class UserService {
             throw new Error('Ocurrió un error durante el registro');
         }
     }
-    
+
 
     async login(email, password) {
         try {
-            const response = await this.userDao.login({email, password});
-            return response;
+            const user = await this.userDao.login({ email, password });
+            if (!user) {
+                throw new Error('Credenciales inválidas');
+            }
+            return user; 
         } catch (error) {
-            console.log(error);
+            throw new Error('Ocurrió un error durante el inicio de sesión');
         }
     }
 }

@@ -16,13 +16,12 @@ export default class UserController {
         try {
             const {email,password} = req.body;
             const response = await userServices.login(email, password);
-            console.log(response);
             if(!response.error) {
                 req.session.email = email;
                 req.session.password = password;
-                res.redirect('/views/profile');
+                res.redirect('/views/home');
             }
-            else res.redirect('/views/');
+            else res.redirect('/views/profile');
         } catch (error) {
             next(error);
         }

@@ -1,8 +1,9 @@
 import * as services from "../services/view.services.js";
-
 export const getAll = async (req, res, next) => {
     try {
         const response = await services.getAll();
+        const userData = req.session
+        console.log(userData);
         const responseLiteral = response.docs.map(producto => {
             return {
                 title: producto.title,

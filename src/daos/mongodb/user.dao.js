@@ -13,12 +13,13 @@ export default class UserDao {
 
     async register(user) {
         try {
-            const { email } = user;
+            const { email, password } = user;
             const userExists = await this.findUserByEmail(email);
     
             if (userExists) {
                 throw new Error(`Ya existe un usuario con el email: ${email}`);
             } else {
+                if (email === 'adminCoder@coder.com' && password === 'adminCod3r123') user.role = 'admin';
                 const response = await UserModel.create(user);
                 return response;
             }
