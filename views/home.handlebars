@@ -1,3 +1,13 @@
+<h1>Datos Usuario</h1>
+<div>
+        {{#if user}}
+        <h5>Bienvenido</h5>
+        <p>Id: {{user._id}}</p>
+        <p>Email: {{user.email}}</p>
+        <p>Nombre: {{user.first_name}}</p>
+        {{!-- Agrega más campos según la estructura de tu objeto loginResponse --}}
+    {{/if}}
+</div>
 <h1>Productos</h1>
 
 <div class="product-container">

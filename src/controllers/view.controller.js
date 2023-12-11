@@ -1,24 +1,31 @@
-import * as services from "../services/view.services.js";
-export const getAll = async (req, res, next) => {
-    try {
-        const response = await services.getAll();
-        const userData = req.session
-        console.log(userData);
-        const responseLiteral = response.docs.map(producto => {
-            return {
-                title: producto.title,
-                description: producto.description,
-                code: producto.code,
-                price: producto.price,
-                status: producto.status,
-                stock: producto.stock,
-                category: producto.category,
-                thumbnails: producto.thumbnails,
-            };
-        });
-        res.render('home', { response: responseLiteral });
+import ViewServices from "../services/view.services.js";
 
-    } catch (error) {
-        console.log(error.message);
+export default class ViewController {
+    constructor() {
+        this.services = new ViewServices();
     }
-};
+
+    async getAll(req, res, next) {
+        try {
+            const response = await this.services.getAll();
+            const loginResponse = req.session.loginResponse;
+            console.log(loginResponse);
+            const responseLiteral = response.docs.map(producto => {
+                return {
+                    title: producto.title,
+                    description: producto.description,
+                    code: producto.code,
+                    price: producto.price,
+                    status: producto.status,
+                    stock: producto.stock,
+                    category: producto.category,
+                    thumbnails: producto.thumbnails,
+                };
+            });
+            res.render('home', { response: responseLiteral, user:loginResponse });
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+}

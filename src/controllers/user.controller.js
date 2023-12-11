@@ -19,6 +19,7 @@ export default class UserController {
             if(!response.error) {
                 req.session.email = email;
                 req.session.password = password;
+                req.session.loginResponse = response
                 res.redirect('/views/home');
             }
             else res.redirect('/views/profile');

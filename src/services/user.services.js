@@ -17,7 +17,6 @@ export default class UserService {
         }
     }
 
-
     async login(email, password) {
         try {
             const user = await this.userDao.login({ email, password });
