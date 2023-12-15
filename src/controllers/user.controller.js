@@ -22,7 +22,16 @@ export default class UserController {
                 req.session.loginResponse = response
                 res.redirect('/views/home');
             }
-            else res.redirect('/views/profile');
+            else res.status(401);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async loginGithub (req, res, next) {
+        try {
+            res.redirect('/views/profile');
+
         } catch (error) {
             next(error);
         }

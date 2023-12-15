@@ -11,6 +11,8 @@ import handlebars from 'express-handlebars'
 import viewRouter from './routes/views.router.js'
 import configureSocketIO from './socket/socket.js';
 import userRouter from './routes/user.router.js';
+import passport from 'passport';
+import './passport/github.strategy.js';
 
 const app = express();
 
@@ -35,6 +37,8 @@ app.use(session(mongoStoreOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/../public'));
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(errorHandler);
 app.use('/api/products', productRouter);

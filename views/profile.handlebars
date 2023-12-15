@@ -1,1 +1,5 @@
-<h1>PROFILE</h1>
+<h1>User Profile</h1>
+<p>Bienvenido, {{user.first_name}}!</p>
+<p>Tu rol es : {{user.role}}</p>
+<p>Logeo con Github: {{user.isGithub}}</p>
+<button onclick="location.href='/api/users/logout'">Logout</button>

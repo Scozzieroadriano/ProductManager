@@ -29,6 +29,8 @@ router.get('/register', (req, res) => {
 
 
 router.get('/profile', (req, res) => {
-    res.render('profile')
+    console.log(req.user);
+    const user = req.user.toObject();
+    res.render('profile', {user})
 });
 export default router; 

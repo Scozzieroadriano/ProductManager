@@ -5,7 +5,7 @@
   "main": "./src/app.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch ."
+    "dev": "node ."
   },
   "author": "Adriano-Scozziero",
   "license": "",
@@ -19,6 +19,8 @@
     "handlebars": "^4.7.8",
     "mongoose": "^8.0.1",
     "mongoose-paginate-v2": "^1.7.4",
+    "passport": "^0.7.0",
+    "passport-github2": "^0.1.12",
     "socket.io": "^4.7.2"
   },
   "devDependencies": {

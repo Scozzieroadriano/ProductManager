@@ -5,7 +5,7 @@ export default class UserDao {
 
     async findUserByEmail(email) {
         try {
-            const user = await UserModel.findOne({ email: email });
+            const user = await UserModel.findOne({email});
             return user;
         } catch (error) {
             console.log(error);
@@ -13,6 +13,7 @@ export default class UserDao {
     }
 
     async register(user) {
+        console.log(user);
         try {
             const { email, password } = user;
             const userExists = await this.findUserByEmail(email);
@@ -25,6 +26,7 @@ export default class UserDao {
                 return response;
             }
         } catch (error) {
+            console.log(error);
             throw new Error('Ocurrió un error durante el registro');
         }
     }
@@ -55,5 +57,34 @@ export default class UserDao {
             throw new Error('Ocurrió un error durante el inicio de sesión'); // Relanzar el error para la gestión global
         }
     }
+
+    async registerGithub(user) {
+        console.log(user);
+        try {
+            const { email, password } = user;
+            const userExists = await this.findUserByEmail(email);
+
+            if (userExists) {
+                throw new Error(`Ya existe un usuario con el email: ${email}`);
+            } else {
+                if (email === 'adminCoder@coder.com' && password === 'adminCod3r123') user.role = 'admin';
+                const response = await UserModel.create({ ...user, password});
+                return response;
+            }
+        } catch (error) {
+            console.log(error);
+            throw new Error('Ocurrió un error durante el registro');
+        }
+    }
+
+    async getById(id){
+        try {
+          const userExist = await UserModel.findById(id)
+          if(userExist) return userExist
+          else return false
+        } catch (error) {
+          console.log(error)
+        }
+      }
 
 }
